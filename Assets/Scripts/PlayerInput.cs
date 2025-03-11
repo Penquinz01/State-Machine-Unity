@@ -21,14 +21,22 @@ public class PlayerInput : MonoBehaviour
         {
             Destroy(this);
         }
-        DontDestroyOnLoad(this);
         _playerActionMap = new PlayerActionMap();
+        _playerActionMap.Enable();
+    }
+    private void OnDisable()
+    {
+        _playerActionMap.Disable();
+        _playerActionMap.Player.Movement.performed -= OnMovement;
+        _playerActionMap.Player.Jump.started -= OnJump;
+        _playerActionMap.Player.Attack.started -= OnAttack;
     }
     private void Start()
     {
         _playerActionMap.Player.Movement.performed += OnMovement;
         _playerActionMap.Player.Jump.started += OnJump;
         _playerActionMap.Player.Attack.started +=OnAttack;
+        _playerActionMap.Player.Movement.canceled+= cxt => MovementInput = Vector2.zero;
     }
 
     private void OnAttack(InputAction.CallbackContext context)
@@ -44,5 +52,6 @@ public class PlayerInput : MonoBehaviour
     private void OnMovement(InputAction.CallbackContext context)
     {
         MovementInput = context.ReadValue<Vector2>();
+        Debug.Log(MovementInput);
     }
 }
