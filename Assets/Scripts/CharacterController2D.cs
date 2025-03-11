@@ -26,7 +26,7 @@ public class CharacterController2D : MonoBehaviour
     }
     private void Update()
     {
-        _rigidbody2D.gravityScale = _rigidbody2D.velocity.y < 0 ? defaultGravityScale * jumpMultiplier : defaultGravityScale;
+        _rigidbody2D.gravityScale = _rigidbody2D.linearVelocity.y < 0 ? defaultGravityScale * jumpMultiplier : defaultGravityScale;
     }
 
     private void Move()
